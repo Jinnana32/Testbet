@@ -1,0 +1,32 @@
+{
+  "name": "testbet",
+  "version": "1.0.0",
+  "description": "A competitive Quiz/Test betting site",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jinnana32/Testbet.git"
+  },
+  "keywords": [
+    "Bet",
+    "Quiz",
+    "Test"
+  ],
+  "author": "Trish Jedrick Coyoca",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jinnana32/Testbet/issues"
+  },
+  "homepage": "https://github.com/Jinnana32/Testbet#readme",
+  "dependencies": {
+    "ether": "0.0.9",
+    "express": "^4.16.3",
+    "socket-io": "^1.0.0"
+  }
+}
