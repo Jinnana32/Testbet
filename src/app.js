@@ -4,34 +4,52 @@ $(window).ready(function(){
     let ss = Users;
     let users = new ss();
 
+    // Metamask Setup
     let metaConnected = $('#metamask-connected');
     let metaDisconnected = $('#metamask-disconnected');
     let metamaskAddress = $('#metamask-address');
     let loginBtn = $('#login-btn');
 
-    let userAddress = $("#user_address");
-    let registerUser = $("#register-user");
+    // User Account
+    let userName = $(".reg_name");
+    let userPass = $(".reg_pass");
+    let userLogName = $(".log_name");
+    let userLogPass = $(".log_pass");
+    let userAddress = $(".reg_address");
+
+    // Init buttons
+    let registerUser = $("#register-btn");
+    let loginUser = $("#loginbtn");
 
     // Render metamask compatibility
     render();
 
     // Initialize modal
     $("#register").modal();
+    $("#loginModal").modal();
 
-    // test adding users
-    registerUser.click(function(){
-        let message = users.register("hello", "hy","daw");
-        console.log(message);
-        /*let test = users.addUser("tj coyoca", "Jinnana3232","myaddress");
-        if(test){
-            console.log("User already exist!");
-        }*/
-
-        //console.log("pass");
-
-        //users.authenticate("tj coyoca", "Jinnana3232","myaddress");
+    loginUser.click(async function(){
+        let result = await users.login(userLogName.val(), userLogPass.val(), userAddress.val());
+        console.log(result);
+        if(result.status == "error"){
+            M.toast({html: result.message});
+        }else{
+            document.location.href = "/dashboard";
+        }
+        resetFields();
     });
+    
+    // Adding users
+    registerUser.click(async function(){
+        let result = await users.register(userName.val(), userPass.val(),userAddress.val());
 
+        // Toast display
+        let toastMessage = "<strong>[Message]</strong> - " + "<span> " + result.message + "</span>";
+        M.toast({html: toastMessage, classes: "rounded"});
+
+        // Reset Textfields
+        resetFields();
+    });
 
     function render(){
         if(typeof web3 !== "undefined"){
@@ -57,6 +75,13 @@ $(window).ready(function(){
 
     function toggleLogin(toggle){
         loginBtn.css("display", toggle);
+    }
+
+    function resetFields(){
+        userName.val("");
+        userPass.val("");
+        userLogName.val("");
+        userLogPass.val("");
     }
 
 });

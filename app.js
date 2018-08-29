@@ -16,6 +16,11 @@ app.get('/', (req,res) => {
     res.sendFile('index.html');
 });
 
+
+app.get('/dashboard', (req, res) => {
+    res.sendFile('dashboard.html',{"root": "views/"});
+});
+
 // register new user
 app.post('/user/register', (req, res) => {
     console.log(req.body);
@@ -25,10 +30,10 @@ app.post('/user/register', (req, res) => {
             db.collection('users').insertOne(req.body, (err,result) => {
                 if (err) return console.log(err)
                 console.log('save to database');
-                res.json({status: "successfull", message: "Register successfull"});
+                res.json({status: "successfull", message: "Yay! Welcome to the fray."});
             })
         }else{
-            res.json({status: "error", message: "Address already exist!"});
+            res.json({status: "error", message: "Sorry, Address already registered"});
         }
     })
 });
@@ -40,10 +45,11 @@ app.post('/user/login', (req, res) => {
         if(user == null){
             res.json({status: "error", message: "Invalid username or password"});
         }else{
-            res.json({status: "successfull", message: "Login successfull"});
+            res.json({status: "success", message: "Login successfull"});
         }
     })
 });
+
 
 // MongoDB
 const mdclient = require('mongodb').MongoClient;
