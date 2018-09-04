@@ -1,8 +1,20 @@
-const express = require("express");
-const app = express();
-const bodyParser = require('body-parser');
+let express = require("express");
+let http = require('http');
+let app = express();
+let bodyParser = require('body-parser');
+
+// Socket IO inits
+let server = http.createServer(app);
+let io = require('socket.io').listen(server);
+
 
 let db = null;
+
+/* 
+===========================================
+            Server Api Logic
+===========================================
+ */
 
 // Render html files from views folder
 app.use(express.static(__dirname + '/views'));
@@ -23,7 +35,7 @@ app.get('/dashboard', (req, res) => {
 
 // register new user
 app.post('/user/register', (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     db.collection('users').findOne({address: req.body.address}, (err, user) => {
         if (err) return console.log(err)
         if(user == null){
@@ -51,6 +63,35 @@ app.post('/user/login', (req, res) => {
 });
 
 
+/* 
+===========================================
+           Sockets Logic
+===========================================
+ */
+
+io.sockets.on('connection', (socket) => {
+    let queue = [];
+    let connections = [];
+
+    connections.push(socket);
+    console.log(`Connected Sockets: ${connections.length}`);
+
+    // Disconnection Event
+    socket.on('disconnect', (data) => {
+        connections.splice(connections.indexOf(socket), 1);
+        console.log(`Connected Sockets: ${connections.length}`);
+    });
+
+    // Find Match
+    socket.on('find match', (data) => {
+        queue.push(data);
+        queue.forEach((users) => {
+            console.log(users);
+        });
+    });
+
+});
+
 // MongoDB
 const mdclient = require('mongodb').MongoClient;
 
@@ -59,7 +100,7 @@ mdclient.connect('mongodb://powerofpanda:Jinnana3232##@ds015924.mlab.com:15924/t
     }, (err, client) => {
     if(err) return console.log(err);
     db = client.db("testbet"); // database name
-    app.listen(3000, function(){
+    server.listen(3000, function(){
         console.log("Server is running at http://localhost:3000");
     });   
 });

@@ -5,13 +5,23 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
 
-    <!-- Scripts -->
+    <!-- JQUERY -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Socket IO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
 
+    <!-- Flip Js -->
+    <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
+
+    <!-- Materialize Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <!-- App controllers -->
-    <script src="users.js"></script>
+    <!-- script src="users.js"></script -->
     <script src="dashboard.js"></script>
 
 </head>
@@ -39,58 +49,236 @@
     </div>
 
     <div id="dashboard-main" class="container" style="margin-top:30px">
-            <div class="row">
-                <div class="col s12" style = "margin-bottom: 30px;">
-                    <ul class="tabs">
-                        <li class="tab col s3"><a class="active" href="#accounts">Account</a></li>
-                        <li class="tab col s3"><a href="#match">Match</a></li>
-                        <li class="tab col s3"><a href="#achievement">Achievements</a></li>
-                        <li class="tab col s3"><a href="#topup">Top Up</a></li>
-                    </ul>
+        <div class="row">
+            <div class="col s12" style="margin-bottom: 30px;">
+                <ul class="tabs">
+                    <li class="tab col s3"><a class="active" href="#accounts">Account</a></li>
+                    <li class="tab col s3"><a href="#match">Match</a></li>
+                    <li class="tab col s3"><a href="#achievement">Achievements</a></li>
+                    <li class="tab col s3"><a href="#topup">Top Up</a></li>
+                </ul>
+            </div>
+
+            <style>
+                .rank {
+                    height: 30px;
+                }
+
+                .rank>li {
+                    float: left;
+                }
+            </style>
+
+            <!-- Account Section -->
+            <div id="accounts" class="col s12">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card" style="padding:10px 30px;">
+                            <ul class="rank">
+                                <li>
+                                    <span style="font-size:1.5em;"><strong>Rank:</strong></span>
+                                    <span>Newbiee</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:-20px;">
+                    <div class="col s8">
+                        <div class="card" style="padding:20px 30px;">
+                            <h6>User info</h6>
+                            <hr/>
+                            <table>
+                                <tr>
+                                    <td><strong>Testbet Name:</strong></td>
+                                    <td>Trish Jedrick coyoca</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Address:</strong></td>
+                                    <td>Trish Jedrick coyoca</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>TBT Balance:</strong></td>
+                                    <td>Trish Jedrick coyoca</td>
+                                </tr>
+                                <tr>
+                                    <td>====================</td>
+                                    <td>====================</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col s4">
+                        <div class="card" style="padding:20px 30px;">
+                            <h6>Record</h6>
+                            <hr/>
+                            <table>
+                                <tr>
+                                    <td>
+                                        Matches:
+                                    </td>
+                                    <td>
+                                        34
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Win:
+                                    </td>
+                                    <td>
+                                        34
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Lose:
+                                    </td>
+                                    <td>
+                                        34
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Achievements:
+                                    </td>
+                                    <td>
+                                        34
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- End -->
+
+            <!-- Match Section -->
+            <div id="match" class="col s12">
+
+                <div class="flippers" style="height:150px;">
+                    <div class="front">
+                        <div class="card center-align" style="padding:20px 10px;margin-bottom:20px;">
+                            <a id="find-match" class="waves-effect waves-green blue darken-4 btn">Find Match Now</a>
+                            <a class="waves-effect waves-green purple darken-4 btn">Challenge a Player</a>
+                        </div>
+                    </div>
+                    <div class="back" style="height: 100px;">
+                        <div class="card center-align" style="padding:20px 10px;margin-bottom:20px;">
+                            <div>
+                                <h5>Looking for match...</h5>
+                                <center>
+                                    <div class="progress" style="width:400px;">
+                                        <div class="indeterminate"></div>
+                                    </div>
+                                </center>
+                            </div>
+
+                            <a id="cancel-match" class="waves-effect waves-green red darken-4 btn">Cancel MatchMaking</a>
+                        </div>
+                    </div>
                 </div>
 
 
-                <!-- Account Section -->
-                <div id="accounts" class="col s12">
-                    <div class="card" style="padding:10px 10px;">
-                        Hello
+                <h5>Match History:</h5>
+                <table class="highlight centered">
+                    <thead>
+                        <tr>
+                            <th>Result</th>
+                            <th>Bet</th>
+                            <th>Score</th>
+                            <th>Enemy</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td class="right-align">Defeated</td>
+                            <td>10 TBT</td>
+                            <td>7/10</td>
+                            <td>Edgar Mapilak</td>
+                            <td>August 6, 2018</td>
+                        </tr>
+                        <tr>
+                            <td>Won</td>
+                            <td>5 TBT</td>
+                            <td>9/10</td>
+                            <td>Mikasa</td>
+                            <td>August 12, 2018</td>
+                        </tr>
+                        <tr>
+                            <td>Defeated</td>
+                            <td>5 TBT</td>
+                            <td>5/10</td>
+                            <td>Mikasa</td>
+                            <td>August 22, 2018</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div><!-- End -->
+
+            <!-- Achievement Section -->
+            <div id="achievement" class="col s12">
+                <div class="row">
+                    <div class="col s3">
+                        <div style="padding:10px 10px;" class="card center-align">
+                            <i class="medium material-icons">ac_unit</i>
+                            <p>Ace Badge</p>
+                        </div>
                     </div>
-                </div><!-- End -->
+                    <div class="col s3">
+                        <div style="padding:10px 10px;" class="card center-align">
+                            <i class="medium material-icons">accessible</i>
+                            <p>Access Badge</p>
+                        </div>
+                    </div>
+                    <div class="col s3">
+                        <div style="padding:10px 10px;" class="card center-align">
+                            <i class="medium material-icons">account_balance</i>
+                            <p>Lumen Badge</p>
+                        </div>
+                    </div>
+                    <div class="col s3">
+                        <div style="padding:10px 10px;" class="card center-align">
+                            <i class="medium material-icons">add_to_queue</i>
+                            <p>Xss Badge</p>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End -->
 
-                <!-- Match Section -->
-                <div id="match" class="col s12">
-                    <center><a class="waves-effect waves-green orange btn">Find Match Now</a></center>
-                    <hr style = "margin-top:30px;"/>
-                    <h5>Match History:</h5>
-
-                    <ul class="collapsible">
-                            <li>
-                              <div class="collapsible-header">Defeated</div>
-                              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                            </li>
-                            <li>
-                              <div class="collapsible-header">Won</div>
-                              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                            </li>
-                            <li>
-                              <div class="collapsible-header">Won</div>
-                              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                            </li>
-                          </ul>
-                </div><!-- End -->
-
-                <!-- Achievement Section -->
-                <div id="achievement" class="col s12">
-
-                </div><!-- End -->
-
-                <!-- Top Up Section -->
-                <div id="topup" class="col s12">
-
-                </div><!-- End -->
+            <!-- Top Up Section -->
+            <div id="topup" class="col s12">
+                <div class="row">
+                    <form class="col s8 offset-s2">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="tbt" type="text" value="1" class="validate">
+                                <label for="tbt">BUY TBT</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input disabled id="disabled" value="0.005" type="text" class="validate">
+                                <label for="disabled">ETH</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input disabled value="0x9944ba2a538b20461107f92e4c4f31e7eb3aae80" id="disabled" type="text" class="validate">
+                                <label for="disabled">Address</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <button class="btn waves-effect waves-green btn-large">Top up</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- End -->
 
 
-            </div>
+        </div>
     </div>
 
 </body>
