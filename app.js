@@ -7,7 +7,6 @@ let bodyParser = require('body-parser');
 let server = http.createServer(app);
 let io = require('socket.io').listen(server);
 
-
 let db = null;
 
 /* 
@@ -23,11 +22,9 @@ app.use(express.static(__dirname + '/src'));
 // Inject body-parser
 app.use(bodyParser.urlencoded({extended: true}));
 
-
 app.get('/', (req,res) => {
     res.sendFile('index.html');
 });
-
 
 app.get('/dashboard', (req, res) => {
     res.sendFile('dashboard.html',{"root": "views/"});
@@ -62,17 +59,15 @@ app.post('/user/login', (req, res) => {
     })
 });
 
-
 /* 
 ===========================================
            Sockets Logic
 ===========================================
  */
-
+let connections = [];
+let queue = [];
 io.sockets.on('connection', (socket) => {
-    let queue = [];
-    let connections = [];
-
+  
     connections.push(socket);
     console.log(`Connected Sockets: ${connections.length}`);
 
@@ -84,10 +79,22 @@ io.sockets.on('connection', (socket) => {
 
     // Find Match
     socket.on('find match', (data) => {
-        queue.push(data);
-        queue.forEach((users) => {
-            console.log(users);
-        });
+
+        if(queue.length > 0) {
+            // find a player with the same bet
+            queue.forEach((users) => {
+                if(data.bet == users.bet){
+
+                    // Enter Match Mode
+                    console.log("Its a match");
+                }else{
+                    queue.push(data);
+                }
+            });
+        }else{
+            queue.push(data);
+        }
+
     });
 
 });
@@ -100,7 +107,7 @@ mdclient.connect('mongodb://powerofpanda:Jinnana3232##@ds015924.mlab.com:15924/t
     }, (err, client) => {
     if(err) return console.log(err);
     db = client.db("testbet"); // database name
-    server.listen(3000, function(){
+    server.listen(3000, '0.0.0.0', function(){
         console.log("Server is running at http://localhost:3000");
     });   
 });
