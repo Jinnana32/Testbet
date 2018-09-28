@@ -36,8 +36,6 @@ $(document).ready(function() {
     if (typeof web3 !== "undefined") {
         web3 = new Web3(web3.currentProvider);
         userAddress = web3.eth.defaultAccount;
-
-
     }
   }
 
@@ -87,16 +85,13 @@ $(document).ready(function() {
   let findMatchBtn = $("#find-match");
   findMatchBtn.click(() => {
 
-    // Init socket IO
-    socket = io.connect('http://localhost:3000');
+    let amountToBet = $(".bet_options").val();
 
-    socket.emit('find match', {address: userAddress, bet: $(".bet_options").val()});
-    $(".flippers").flip(true);
+    startMatchMaking(amountToBet);
 
-    socket.on("match", function(data){
-      $("#cancel-match").attr("disabled", "disabled");
-      console.log(data);
-    });
+    // contract.placeBet({gas: 50000, value: amountToBet},function(err,res){
+    //   if(err !== null) return false;
+    // });
 
   });
 
@@ -112,6 +107,34 @@ $(document).ready(function() {
                             SOCKET IO LOGICS
   ==============================================================================
   */
+
+  function startMatchMaking(amountToBet){
+          // Flip cancel button
+          $(".flippers").flip(true);
+
+          // Init socket IO
+          socket = io.connect('http://localhost:3000');
+    
+          // Initialize start match
+          socket.emit('find match', {address: userAddress, bet: amountToBet});
+    
+          // Listen for match event
+          socket.on("match", function(data){
+            $("#cancel-match").attr("disabled", "disabled");
+            $("#profile_area").css("display", "none");
+            $("#start_area").css("display", "block");
+            
+            // Click listener if player is ready
+            $(".readyBtn").click(function(){
+              socket.emit("ready");
+            });
+    
+          });
+          
+          socket.on("loadQuestion", function(question){
+              console.log(question);
+          });
+  }
 
 
 

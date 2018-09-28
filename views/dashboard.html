@@ -50,240 +50,346 @@
         </div>
     </div>
 
-    <div id="dashboard-main" class="container" style="margin-top:30px">
-        <div class="row">
-            <div class="col s12" style="margin-bottom: 30px;">
-                <ul class="tabs">
-                    <li class="tab col s4"><a class="active" href="#accounts">Account</a></li>
-                    <li class="tab col s4"><a href="#match">Match</a></li>
-                    <li class="tab col s4"><a href="#achievement">Achievements</a></li>
-                </ul>
+        <!-- Dashboard Wrapper -->
+        <div id="dashboard-main" class="container" style="margin-top:30px">
+
+            <!-- Game Template -->
+            <div class="row" id = "start_area" style = "display:none;">
+                <div class="card center-align" style = "padding:20px 5px;">
+                    <h5>Match Found! Click start when ready</h5>
+                    <button type ="button" class="btn waves-effect waves-orange blue btn-small readyBtn">Ok, I'm ready</button>     
+                </div>
             </div>
 
-            <style>
-                .rank {
-                    height: 30px;
-                }
-
-                .rank>li {
-                    float: left;
-                }
-            </style>
-
-            <!-- Account Section -->
-            <div id="accounts" class="col s12">
-                <div class="row">
-                    <div class="col s12">
-                        <div class="card" style="padding:10px 30px;">
-                            <ul class="rank">
-                                <li>
-                                    <span style="font-size:1.5em;"><strong>Rank:</strong></span>
-                                    <span id = "acc_rank"></span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="margin-top:-20px;">
-                    <div class="col s8">
-                        <div class="card" style="padding:20px 30px;">
-                            <h5>User info</h5>
-                            <hr/>
-                            <table>
-                                <tr>
-                                    <td><strong>Testbet Name:</strong></td>
-                                    <td><span class = "acc_name"></span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Address:</strong></td>
-                                    <td><span id = "acc_address"></span></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col s4">
-                        <div class="card" style="padding:20px 30px;">
-                            <h5>Record</h5>
-                            <hr/>
-                            <table>
-                                <tr>
-                                    <td>
-                                        Matches:
-                                    </td>
-                                    <td>
-                                        <span id = "acc_totalMatch">-</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Win:
-                                    </td>
-                                    <td>
-                                        <span id = "acc_wins">-</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Lose:
-                                    </td>
-                                    <td>
-                                        <span id = "acc_lose">-</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Achievements:
-                                    </td>
-                                    <td>
-                                        <span id = "acc_achieve">-</span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </div><!-- End -->
-
-            <!-- Match Section -->
-            <div id="match" class="col s12">
-
-                <div class="flippers" style="height:150px;">
-                    <div class="front">
-                        <div class="card center-align" style="padding:20px 10px;margin-bottom:20px;">
-                            <a id="find-match" class="waves-effect waves-green blue darken-4 btn">Find Match Now</a>
-                        </div>
-                    </div>
-                    <div class="back" style="height: 100px;">
-                        <div class="card center-align" style="padding:20px 10px;margin-bottom:20px;">
-                            <div>
-                                <h5>Looking for match...</h5>
-                                <center>
-                                    <div class="progress" style="width:400px;">
-                                        <div class="indeterminate"></div>
-                                    </div>
-                                </center>
-                            </div>
-
-                            <a id="cancel-match" class="waves-effect waves-green red darken-4 btn">Cancel MatchMaking</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card" style="padding:5px;">
-                        <div class="row" style = "margin:0">
-                                <div class="input-field col s6 offset-s3">
-                                        <select class="bet_options">
-                                          <option value="50">50 Finney (0.5 ETH)</option>
-                                          <option value="100">100 Finney (0.10 ETH)</option>
-                                          <option value="150">150 Finney (0.15 ETH)</option>
-                                        </select>
-                                        <label>BET OPTIONS</label>
-                                      </div>
-                        </div>
-                    </div>
-
-                <h5>Match History:</h5>
-                <table class="highlight centered">
-                    <thead>
-                        <tr>
-                            <th>Result</th>
-                            <th>Bet</th>
-                            <th>Score</th>
-                            <th>Enemy</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td class="right-align">Defeated</td>
-                            <td>10 TBT</td>
-                            <td>7/10</td>
-                            <td>Edgar Mapilak</td>
-                            <td>August 6, 2018</td>
-                        </tr>
-                        <tr>
-                            <td>Won</td>
-                            <td>5 TBT</td>
-                            <td>9/10</td>
-                            <td>Mikasa</td>
-                            <td>August 12, 2018</td>
-                        </tr>
-                        <tr>
-                            <td>Defeated</td>
-                            <td>5 TBT</td>
-                            <td>5/10</td>
-                            <td>Mikasa</td>
-                            <td>August 22, 2018</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div><!-- End -->
-
-            <!-- Achievement Section -->
-            <div id="achievement" class="col s12">
-                <div class="row">
-                    <div class="col s3">
-                        <div style="padding:10px 10px;" class="card center-align">
-                            <i class="medium material-icons">ac_unit</i>
-                            <p>Ace Badge</p>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div style="padding:10px 10px;" class="card center-align">
-                            <i class="medium material-icons">accessible</i>
-                            <p>Access Badge</p>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div style="padding:10px 10px;" class="card center-align">
-                            <i class="medium material-icons">account_balance</i>
-                            <p>Lumen Badge</p>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div style="padding:10px 10px;" class="card center-align">
-                            <i class="medium material-icons">add_to_queue</i>
-                            <p>Xss Badge</p>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- End -->
-
-            <!-- Top Up Section 
-            <div id="topup" class="col s12">
-                <div class="row">
-                    <form class="col s8 offset-s2">
+            <!-- Game Template -->
+            <div class="row" id = "gaming_area" style = "display:none;">
+                <div class="col s8">
+                    <div class="card" style = "padding:0px 5px;">
                         <div class="row">
-                            <div class="input-field col s6">
-                                <input id="tbt" type="text" value="1" class="validate">
-                                <label for="tbt">BUY TBT</label>
+                            <div class="col 4 offset-s2">
+                                    <h5>"What is the center of the earth"</h5>
+                                    <ol type = "A" class="collection">
+                                        <li class="collection-item">Core</li>
+                                        <li class="collection-item">Cores</li>
+                                        <li class="collection-item">Corez</li>
+                                        <li class="collection-item">Coreb</li>
+                                    </ol>
                             </div>
-                            <div class="input-field col s6">
-                                <input disabled id="disabled" value="0.005" type="text" class="validate">
-                                <label for="disabled">ETH</label>
+                        </div>
+                       
+                    </div>
+                </div>
+        
+                <div class="col s4">
+                        <div class="card" style = "padding:8px 5px;">
+                                <table class="striped">
+                                    <tr>
+                                        <td>Turn Status:</td>
+                                        <td>No submissions yet.</td>
+                                    </tr>
+                                </table>
+                        </div>
+                        <div class="card" style = "padding:8px 5px;">
+                                <table class="striped">
+                                    <tr>
+                                            <td>Your score:</td>
+                                            <td>No submissions yet.</td>
+                                        </tr>
+                                        <tr>
+                                                <td>Enemy Score:</td>
+                                                <td>No submissions yet.</td>
+                                            </tr>
+                                </table>
+                        </div>
+                </div>
+        
+                <div class="col s6">
+                    <div class="card" style = "padding:10px 5px;">
+                            <div class="row" style = "margin:0">
+                              
+                                    <div class="input-field col s12">
+                                            <h6>Question: 3</h6>
+                                            <select class="bet_options">
+                                              <option value="50">A. Core</option>
+                                              <option value="100">B. Egypt</option>
+                                              <option value="150">C. Areanan</option>
+                                              <option value="150">D. asdaw</option>
+                                            </select>
+                                            <label>Choose answer</label>
+                                          </div>
+                                          <div class="input-field col s8">
+                                                <button type ="button" class="btn waves-effect waves-orange green btn-small">Submit Answer</button>
+                                            </div>
                             </div>
+                    </div>
+                </div>
+        
+                <div class="col s6">
+                   <div class="card" style = "padding:10px 10px;">
+                        <div class="row center-align">
+                            <div class="col s6">Your Answer</div>
+                            <div class="col s6">Opponent Answer</div>
+                            <div class="col s6 grey white-text" style="padding:10px 0px;">Waiting...</div>
+                            <div class="col s6 red  white-text" style="padding:10px 0px;">Core</div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
-                                <input disabled value="0x9944ba2a538b20461107f92e4c4f31e7eb3aae80" id="disabled" type="text" class="validate">
-                                <label for="disabled">Address</label>
+                            <div class="input-field col s12 center-align">
+                                <button type ="button" class="btn waves-effect waves-orange info btn-medium">Continue Battle</button>
                             </div>
                         </div>
+                   </div>
+                </div>
+
+                <style>
+                        #flying-pot{
+                            position: absolute;
+                            top:100;
+                            left:0;
+                        }
+                    </style>
+                    <div id = "flying-pot">
+                        <div class="card">
+                            <h6 class="purple white-text" style="padding:5px 10px 5px 50px;"><strong>Total Bet</strong></h6>
+                            <p style="padding:5px 10px 0px 50px;"><strong>50 Finney</strong></p>
+                            <p style="padding:0px 10px 20px 50px;"><strong>(0.05 ETH)</strong></p>
+                        </div>
+                    </div>
+        
+            </div><!-- Game Template -->
+
+            <div class="row" id = "profile_area">
+                    <div class="col s12" style="margin-bottom: 30px;">
+                        <ul class="tabs">
+                            <li class="tab col s4"><a class="active" href="#accounts">Account</a></li>
+                            <li class="tab col s4"><a href="#match">Match</a></li>
+                            <li class="tab col s4"><a href="#achievement">Achievements</a></li>
+                        </ul>
+                    </div>
+        
+                    <style>
+                        .rank {
+                            height: 30px;
+                        }
+        
+                        .rank>li {
+                            float: left;
+                        }
+                    </style>
+        
+                    <!-- Account Section -->
+                    <div id="accounts" class="col s12">
                         <div class="row">
                             <div class="col s12">
-                                <button class="btn waves-effect waves-green btn-large">Top up</button>
+                                <div class="card" style="padding:10px 30px;">
+                                    <ul class="rank">
+                                        <li>
+                                            <span style="font-size:1.5em;"><strong>Rank:</strong></span>
+                                            <span id = "acc_rank"></span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                        <div class="row" style="margin-top:-20px;">
+                            <div class="col s8">
+                                <div class="card" style="padding:20px 30px;">
+                                    <h5>User info</h5>
+                                    <hr/>
+                                    <table>
+                                        <tr>
+                                            <td><strong>Testbet Name:</strong></td>
+                                            <td><span class = "acc_name"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Address:</strong></td>
+                                            <td><span id = "acc_address"></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col s4">
+                                <div class="card" style="padding:20px 30px;">
+                                    <h5>Record</h5>
+                                    <hr/>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                Matches:
+                                            </td>
+                                            <td>
+                                                <span id = "acc_totalMatch">-</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Win:
+                                            </td>
+                                            <td>
+                                                <span id = "acc_wins">-</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Lose:
+                                            </td>
+                                            <td>
+                                                <span id = "acc_lose">-</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Achievements:
+                                            </td>
+                                            <td>
+                                                <span id = "acc_achieve">-</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div><!-- End -->
+        
+                    <!-- Match Section -->
+                    <div id="match" class="col s12">
+        
+                        <div class="flippers" style="height:150px;">
+                            <div class="front">
+                                <div class="card center-align" style="padding:20px 10px;margin-bottom:20px;">
+                                    <a id="find-match" class="waves-effect waves-green blue darken-4 btn">Find Match Now</a>
+                                </div>
+                            </div>
+                            <div class="back" style="height: 100px;">
+                                <div class="card center-align" style="padding:20px 10px;margin-bottom:20px;">
+                                    <div>
+                                        <h5>Looking for match...</h5>
+                                        <center>
+                                            <div class="progress" style="width:400px;">
+                                                <div class="indeterminate"></div>
+                                            </div>
+                                        </center>
+                                    </div>
+        
+                                    <a id="cancel-match" class="waves-effect waves-green red darken-4 btn">Cancel MatchMaking</a>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="card" style="padding:5px;">
+                                <div class="row" style = "margin:0">
+                                        <div class="input-field col s6 offset-s3">
+                                                <select class="bet_options">
+                                                  <option value="50000000000000000">0.05 ETH</option>
+                                                  <option value="100000000000000000">0.10 ETH</option>
+                                                  <option value="150000000000000000">0.15 ETH</option>
+                                                </select>
+                                                <label>BET OPTIONS</label>
+                                              </div>
+                                </div>
+                            </div>
+        
+                        <h5>Match History:</h5>
+                        <table class="highlight centered">
+                            <thead>
+                                <tr>
+                                    <th>Result</th>
+                                    <th>Bet</th>
+                                    <th>Score</th>
+                                    <th>Enemy</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+        
+                            <tbody>
+                                <tr>
+                                    <td class="right-align">Defeated</td>
+                                    <td>10 TBT</td>
+                                    <td>7/10</td>
+                                    <td>Edgar Mapilak</td>
+                                    <td>August 6, 2018</td>
+                                </tr>
+                                <tr>
+                                    <td>Won</td>
+                                    <td>5 TBT</td>
+                                    <td>9/10</td>
+                                    <td>Mikasa</td>
+                                    <td>August 12, 2018</td>
+                                </tr>
+                                <tr>
+                                    <td>Defeated</td>
+                                    <td>5 TBT</td>
+                                    <td>5/10</td>
+                                    <td>Mikasa</td>
+                                    <td>August 22, 2018</td>
+                                </tr>
+                            </tbody>
+                        </table>
+        
+                    </div><!-- End -->
+        
+                    <!-- Achievement Section -->
+                    <div id="achievement" class="col s12">
+                        <div class="row">
+                            <div class="col s3">
+                                <div style="padding:10px 10px;" class="card center-align">
+                                    <i class="medium material-icons">ac_unit</i>
+                                    <p>Ace Badge</p>
+                                </div>
+                            </div>
+                            <div class="col s3">
+                                <div style="padding:10px 10px;" class="card center-align">
+                                    <i class="medium material-icons">accessible</i>
+                                    <p>Access Badge</p>
+                                </div>
+                            </div>
+                            <div class="col s3">
+                                <div style="padding:10px 10px;" class="card center-align">
+                                    <i class="medium material-icons">account_balance</i>
+                                    <p>Lumen Badge</p>
+                                </div>
+                            </div>
+                            <div class="col s3">
+                                <div style="padding:10px 10px;" class="card center-align">
+                                    <i class="medium material-icons">add_to_queue</i>
+                                    <p>Xss Badge</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End -->
+        
+                    <!-- Top Up Section 
+                    <div id="topup" class="col s12">
+                        <div class="row">
+                            <form class="col s8 offset-s2">
+                                <div class="row">
+                                    <div class="input-field col s6">
+                                        <input id="tbt" type="text" value="1" class="validate">
+                                        <label for="tbt">BUY TBT</label>
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <input disabled id="disabled" value="0.005" type="text" class="validate">
+                                        <label for="disabled">ETH</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input disabled value="0x9944ba2a538b20461107f92e4c4f31e7eb3aae80" id="disabled" type="text" class="validate">
+                                        <label for="disabled">Address</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12">
+                                        <button class="btn waves-effect waves-green btn-large">Top up</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div> -->
+        
+        
                 </div>
-            </div> -->
-
-
-        </div>
-    </div>
+            </div><!-- Dashboard Wrapper -->
 
 </body>
 
