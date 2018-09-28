@@ -111,9 +111,8 @@ $(document).ready(function() {
   function startMatchMaking(amountToBet){
           // Flip cancel button
           $(".flippers").flip(true);
+          $(".btnContinueBattle").css("display", "none");
 
-          let yourScore = 0;
-          let enemyScore = 0;
           let questionTracker = 1;
 
           // Init socket IO
@@ -137,6 +136,7 @@ $(document).ready(function() {
           });
           
           socket.on("loadQuestion", function(results){
+            resetElements();
             $("#start_area").css("display", "none");
             $("#gaming_area").css("display", "block");
             // Player views of the question
@@ -166,6 +166,8 @@ $(document).ready(function() {
 
           socket.on("next-question", function(results){
             $(".socketSubmit").css("display", "none");
+            $(".btnContinueBattle").css("display", "block");
+
             let userAns = results.userAnswer;
             let opAns = results.opponentAnswer;
             let userStats = results.userStatus;
@@ -186,13 +188,41 @@ $(document).ready(function() {
             $(".userAnswer").html(userAns);
             $(".opponentAnswer").html(opAns);
 
+            $(".btnContinueBattle").click(function(){
+                socket.emit("ready");
+                $(this).text("Waiting opponent");
+            });
           });
 
           socket.on("update-scores", function(scores){
-            alert("score update");
-              $(".your_score").html(scores.userScore + "/10");
-              $(".opp_score").html(scores.opScore + "/10");
+            //alert(scores.userScore);
+            $("#your_score").html(scores.userScore + "/10");
+            $("#opp_score").html(scores.opScore + "/10");
           });
+
+          
+
+  }
+
+  function resetElements(){
+
+    // Reset Answer box
+    $(".userAnswer").removeClass("red").addClass("grey");
+    $(".userAnswer").removeClass("green").addClass("grey");
+    $(".opponentAnswer").removeClass("red").addClass("grey");
+    $(".opponentAnswer").removeClass("green").addClass("grey");
+
+    $(".userAnswer").text("Waiting...");
+    $(".opponentAnswer").text("Waiting...");
+
+    // Reset buttons
+    $(".btnContinueBattle").css("display", "none");
+    $(".socketSubmit").css("display", "block");
+
+    // Reset contine button text
+    $(".btnContinueBattle").text("continue battle");
+
+    $("#sub_status").html("No submissions yet");
 
   }
 
@@ -230,7 +260,6 @@ $(document).ready(function() {
       //$(".bet_options").append("hello");
       $(".bet_options").append('<option value="' + choices[x] + '">'+ choices[x] +'</option>');
     }
-
 
   }
 

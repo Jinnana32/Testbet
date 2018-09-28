@@ -19,6 +19,7 @@ class GameManager {
         this._players.forEach(s => s.on("ready", () => {
             this._confirmation += 1;
             if(this._confirmation == 2){
+                this._confirmation = 0;
                 this._loadQuestion();
             }
         }));
@@ -29,7 +30,9 @@ class GameManager {
 
             if(answer == this._currentCorrectAnswer){
                 this._playerAnswer[index][1] = "correct";
-                this._playerScore[index] = this._playerScore[index] + 1;
+                let curscore = this._playerScore[index] + 1;
+                this._playerScore[index] = curscore;
+                console.log(this._playerScore[index]);
             }
 
             switch(index){
@@ -81,6 +84,9 @@ class GameManager {
                     s.emit("next-question", {userAnswer: userAnswer, userStatus: userStatus, opponentAnswer: opponentAnswer, opponentStatus:opponentStatus});
                     s.emit("update-scores", {userScore: userScore, opScore:opScore});
                 });
+
+                this._playerAnswer[0][0] = "";
+                this._playerAnswer[1][0] = "";
             }
 
         }));
@@ -96,11 +102,15 @@ class GameManager {
     }
 
     _loadQuestion(){
+        if(this._questionTracker !== 9){
         let currentQuestion = this._questions[this._questionTracker];
         this._currentCorrectAnswer = currentQuestion.correct_answer;
         console.log("Current answer: ", this._currentCorrectAnswer);
         this._players.forEach(s => s.emit("loadQuestion", currentQuestion));
         this._questionTracker++;
+        }else{
+            console.log("Game finish!");
+        }
     }
 
 }
