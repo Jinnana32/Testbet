@@ -1,0 +1,78 @@
+<html>
+
+<head>
+    <title>Dashboard - testbet</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+
+    <!-- JQUERY -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Socket IO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+    <!-- Flip Js -->
+    <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
+
+    <!-- Materialize Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- App controllers -->
+    <!-- script src="users.js"></script -->
+    <script src="account.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="pink darken-4">
+        <div class="nav-wrapper">
+            <div class="container">
+                <a href="#" class="brand-logo">TestBet</a>
+                <ul id="nav-mobile" class="right">
+                    <li id="name"><i class="material-icons left">account_circle</i>New user</li>
+                    <li id="login-btn"><a href="/">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><!-- Navigation Bar -->
+
+    <div id="meta-mask-error" class="container" style="margin-top:30px;display:none;">
+        <div class="card" style="padding:10px 30px;">
+            <blockquote id="metamask-disconnected" style="display:none;">
+                <h5 id="metamask-info" style="color:maroon;">Metamask disconnected</h5>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card" style="padding:10px 30px;">
+            <blockquote>
+                <h6>Testbet Account</h6>
+            </blockquote>
+
+            <div class="row">
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input placeholder="Awesome name" id="testbet_name" type="text" class="validate">
+                      <label for="first_name">Testbet Name</label>
+                    </div>
+                    <div class="input-field col s8">
+                        <button type ="button" class="btn waves-effect waves-green btn-small create-account">Start slaying</button>
+                    </div>
+                  </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

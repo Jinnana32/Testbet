@@ -1,12 +1,12 @@
-function GameManager(p1 , p2){
-    this.player1 = p1;
-    this.player2 = p2;
-}
+class GameManager {
 
-GameManager.prototype.startBattle = function(){
-        
-}
+    constructor(p1,p2){
+        this._p1 = p1;
+        this._p2 = p2;
 
-GameManager.prototype.chooseWinner = function(){
+        [this._p1, this._p2].forEach(s => s.emit("match", "Match found"));
+    }
 
 }
+
+module.exports = GameManager;

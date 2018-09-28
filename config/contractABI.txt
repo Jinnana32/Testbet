@@ -1,0 +1,302 @@
+[
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_name",
+            "type": "string"
+          },
+          {
+            "name": "_playerAddress",
+            "type": "address"
+          }
+        ],
+        "name": "addNewPlayer",
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [],
+        "name": "AllocateBet",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_bet",
+            "type": "uint256"
+          }
+        ],
+        "name": "MakeMatch",
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_bet",
+            "type": "uint256"
+          },
+          {
+            "name": "_winner",
+            "type": "address"
+          }
+        ],
+        "name": "placeBet",
+        "outputs": [],
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [],
+        "name": "SaveMatchHistory",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_bet",
+            "type": "uint256"
+          }
+        ],
+        "name": "withdraw",
+        "outputs": [],
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "_playerAddress",
+            "type": "address"
+          },
+          {
+            "name": "matchIndex",
+            "type": "uint256"
+          },
+          {
+            "name": "quizIndex",
+            "type": "uint256"
+          }
+        ],
+        "name": "getMatchQuestions",
+        "outputs": [
+          {
+            "name": "question",
+            "type": "string"
+          },
+          {
+            "name": "correctAnswer",
+            "type": "string"
+          },
+          {
+            "name": "choice1",
+            "type": "string"
+          },
+          {
+            "name": "choice2",
+            "type": "string"
+          },
+          {
+            "name": "choice3",
+            "type": "string"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "_playerAddress",
+            "type": "address"
+          }
+        ],
+        "name": "getPlayerInfo",
+        "outputs": [
+          {
+            "name": "_name",
+            "type": "string"
+          },
+          {
+            "name": "_rank",
+            "type": "string"
+          },
+          {
+            "name": "_matches",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "getPlayerLength",
+        "outputs": [
+          {
+            "name": "length",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "_playerAddress",
+            "type": "address"
+          },
+          {
+            "name": "index",
+            "type": "uint256"
+          }
+        ],
+        "name": "getPlayerMatchHistory",
+        "outputs": [
+          {
+            "name": "bet",
+            "type": "uint256"
+          },
+          {
+            "name": "score",
+            "type": "uint256"
+          },
+          {
+            "name": "totalQuestion",
+            "type": "uint256"
+          },
+          {
+            "name": "winner",
+            "type": "address"
+          },
+          {
+            "name": "loser",
+            "type": "address"
+          },
+          {
+            "name": "date_created",
+            "type": "string"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "_playerAddress",
+            "type": "address"
+          }
+        ],
+        "name": "playerExist",
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "playerInfo",
+        "outputs": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "rank",
+            "type": "string"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "players",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "shit",
+        "outputs": [
+          {
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ]

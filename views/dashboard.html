@@ -22,6 +22,7 @@
 
     <!-- App controllers -->
     <!-- script src="users.js"></script -->
+    <script src="TestBetManager.js"></script>
     <script src="dashboard.js"></script>
 
 </head>
@@ -34,6 +35,7 @@
             <div class="container">
                 <a href="#" class="brand-logo">TestBet</a>
                 <ul id="nav-mobile" class="right">
+                    <li id="name"><i class="material-icons left">account_circle</i><span class = "acc_name">Newbiee</span></li>
                     <li id="login-btn"><a href="/">Logout</a></li>
                 </ul>
             </div>
@@ -52,9 +54,9 @@
         <div class="row">
             <div class="col s12" style="margin-bottom: 30px;">
                 <ul class="tabs">
-                    <li class="tab col s3"><a class="active" href="#accounts">Account</a></li>
-                    <li class="tab col s3"><a href="#match">Match</a></li>
-                    <li class="tab col s3"><a href="#achievement">Achievements</a></li>
+                    <li class="tab col s4"><a class="active" href="#accounts">Account</a></li>
+                    <li class="tab col s4"><a href="#match">Match</a></li>
+                    <li class="tab col s4"><a href="#achievement">Achievements</a></li>
                 </ul>
             </div>
 
@@ -76,7 +78,7 @@
                             <ul class="rank">
                                 <li>
                                     <span style="font-size:1.5em;"><strong>Rank:</strong></span>
-                                    <span>Newbiee</span>
+                                    <span id = "acc_rank"></span>
                                 </li>
                             </ul>
                         </div>
@@ -85,31 +87,23 @@
                 <div class="row" style="margin-top:-20px;">
                     <div class="col s8">
                         <div class="card" style="padding:20px 30px;">
-                            <h6>User info</h6>
+                            <h5>User info</h5>
                             <hr/>
                             <table>
                                 <tr>
                                     <td><strong>Testbet Name:</strong></td>
-                                    <td>Trish Jedrick coyoca</td>
+                                    <td><span class = "acc_name"></span></td>
                                 </tr>
                                 <tr>
                                     <td><strong>Address:</strong></td>
-                                    <td>Trish Jedrick coyoca</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>ETH Balance:</strong></td>
-                                    <td>Trish Jedrick coyoca</td>
-                                </tr>
-                                <tr>
-                                    <td>====================</td>
-                                    <td>====================</td>
+                                    <td><span id = "acc_address"></span></td>
                                 </tr>
                             </table>
                         </div>
                     </div>
                     <div class="col s4">
                         <div class="card" style="padding:20px 30px;">
-                            <h6>Record</h6>
+                            <h5>Record</h5>
                             <hr/>
                             <table>
                                 <tr>
@@ -117,7 +111,7 @@
                                         Matches:
                                     </td>
                                     <td>
-                                        34
+                                        <span id = "acc_totalMatch">-</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -125,7 +119,7 @@
                                         Win:
                                     </td>
                                     <td>
-                                        34
+                                        <span id = "acc_wins">-</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -133,7 +127,7 @@
                                         Lose:
                                     </td>
                                     <td>
-                                        34
+                                        <span id = "acc_lose">-</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -141,7 +135,7 @@
                                         Achievements:
                                     </td>
                                     <td>
-                                        34
+                                        <span id = "acc_achieve">-</span>
                                     </td>
                                 </tr>
                             </table>
@@ -158,7 +152,6 @@
                     <div class="front">
                         <div class="card center-align" style="padding:20px 10px;margin-bottom:20px;">
                             <a id="find-match" class="waves-effect waves-green blue darken-4 btn">Find Match Now</a>
-                            <a class="waves-effect waves-green purple darken-4 btn">Challenge a Player</a>
                         </div>
                     </div>
                     <div class="back" style="height: 100px;">
@@ -177,6 +170,18 @@
                     </div>
                 </div>
 
+                <div class="card" style="padding:5px;">
+                        <div class="row" style = "margin:0">
+                                <div class="input-field col s6 offset-s3">
+                                        <select class="bet_options">
+                                          <option value="50">50 Finney (0.5 ETH)</option>
+                                          <option value="100">100 Finney (0.10 ETH)</option>
+                                          <option value="150">150 Finney (0.15 ETH)</option>
+                                        </select>
+                                        <label>BET OPTIONS</label>
+                                      </div>
+                        </div>
+                    </div>
 
                 <h5>Match History:</h5>
                 <table class="highlight centered">

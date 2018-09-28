@@ -6,6 +6,7 @@ let bodyParser = require('body-parser');
 // Socket IO inits
 let server = http.createServer(app);
 let io = require('socket.io').listen(server);
+let GameManager = require("./src/GameManager");
 
 let db = null;
 
@@ -18,6 +19,7 @@ let db = null;
 // Render html files from views folder
 app.use(express.static(__dirname + '/views'));
 app.use(express.static(__dirname + '/src'));
+app.use(express.static(__dirname + '/config'));
 
 // Inject body-parser
 app.use(bodyParser.urlencoded({extended: true}));
@@ -28,6 +30,10 @@ app.get('/', (req,res) => {
 
 app.get('/dashboard', (req, res) => {
     res.sendFile('dashboard.html',{"root": "views/"});
+});
+
+app.get('/account', (req, res) => {
+    res.sendFile('account.html',{"root": "views/"});
 });
 
 // register new user
@@ -82,20 +88,31 @@ io.sockets.on('connection', (socket) => {
 
         if(queue.length > 0) {
             // find a player with the same bet
-            queue.forEach((users) => {
+            queue.forEach((users, index) => {
                 if(data.bet == users.bet){
+                    
+                    new GameManager(connections[index], socket);
+                    
+                    // Remove the user from QUEUE
+                    removeFromQueue(users.address);
 
-                    // Enter Match Mode
-                    console.log("Its a match");
                 }else{
                     queue.push(data);
                 }
             });
+
         }else{
             queue.push(data);
         }
-
     });
+
+    function removeFromQueue(address){
+        queue.forEach((users, index, obj) => {
+            if(users.address == address){
+                obj.splice(index, 1);
+            }
+        });
+    }
 
 });
 
