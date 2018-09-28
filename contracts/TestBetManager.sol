@@ -1,29 +1,21 @@
 pragma solidity ^0.4.0;
 
-contract BetCollector{
-    
-    function PlaceBet(uint bet) public payable{}
-    function AllocateBet(address winner) public payable{
-        winner.transfer(address(this).balance);
-    }
-    
-}
-
 contract TestBetManager {
     
     address owner;
     
     mapping(address => Player) public playerInfo;
-    mapping(string => uint) pending_bets;
-    mapping(uint => address) betContracts;
+    mapping(uint => uint) pending_bets;
     
-    modifier validateBalance() {
+    modifier validateBalance(uint amount) {
         require(address(this).balance > 0);
+        require(address(this).balance >= amount);
         _;
     }
 
     // Save player address for checking
     address[] public players;
+    uint[] public bets;
     
     struct Player {
         string name;
@@ -60,20 +52,30 @@ contract TestBetManager {
     */
     
     // adds new player
-    function addNewPlayer(string memory _name, address _playerAddress) public returns(bool){
+    function addNewPlayer(string _name, address _playerAddress) public returns(bool){
         
         for(uint256 i = 0; i < getPlayerLength(); i++){
             if(players[i] == _playerAddress){
                 return false;
             }
-                
         }
         
         playerInfo[_playerAddress].name = _name;
         playerInfo[_playerAddress].rank = "Newbie";
-        players.push(msg.sender);
+        players.push(_playerAddress);
         
         return true;
+
+    }
+    
+    function playerExist(address _playerAddress) public view returns(bool){
+        for(uint256 i = 0; i < getPlayerLength(); i++){
+            if(players[i] == _playerAddress){
+                return true;
+            }
+        }
+        
+        return false;
     }
     
     function getPlayerInfo(address _playerAddress) public view 
@@ -128,34 +130,20 @@ contract TestBetManager {
     */
     
     // Send bet to contract
-    function placeBet(uint _bet, address _winner) public payable{
-     // user is sending nothing so they must want to withdraw
-      if (msg.value == 0) {
-         withdraw(_bet);
-      }
-    }
-    
-    function withdraw(uint _bet) public payable{
-        
-    }
+    function placeBet() public payable{}
     
     // Start match by saving the total bet
-    function MakeMatch(uint _bet) public  returns(bool){
-        uint matchID = uint(block.blockhash(block.number-1));
-        
-        address matchAddress = new BetCollector();
-        betContracts[matchID] = matchAddress;
-        
-        matchAddress.placeBet(_bet);
+    function MakeMatch(uint _bet, uint _uuid) public returns(uint id){
+        pending_bets[_uuid] = _bet;
+        bets.push(_uuid);
+       return _uuid;
     }
     
-    function SaveMatchHistory() public validateBalance{
-        
-    }
-    
-    // Allocate bet to the winner
-    function AllocateBet() public validateBalance{
-        
+    function allocateBetToWinner(address _winner, uint _uuid) public validateBalance(amount){
+        uint amount = pending_bets[_uuid];
+         if(!_winner.send(amount)){
+           throw;
+         }    
     }
     
     /*
@@ -167,7 +155,5 @@ contract TestBetManager {
     function getPlayerLength() public view returns(uint256 length){
         length = players.length;
     }
-    
-    
     
 }

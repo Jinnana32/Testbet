@@ -85,7 +85,7 @@ $(document).ready(function() {
   let findMatchBtn = $("#find-match");
   findMatchBtn.click(() => {
 
-    let amountToBet = $(".bet_options").val();
+    let amountToBet = $(".bet_options option:selected").val()
 
     startMatchMaking(amountToBet);
 
@@ -109,6 +109,7 @@ $(document).ready(function() {
   */
 
   function startMatchMaking(amountToBet){
+         
           // Flip cancel button
           $(".flippers").flip(true);
           $(".btnContinueBattle").css("display", "none");

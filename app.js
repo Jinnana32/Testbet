@@ -90,8 +90,12 @@ io.sockets.on('connection', (socket) => {
             // find a player with the same bet
             queue.forEach((users, index) => {
                 if(data.bet == users.bet){
-                    
-                    new GameManager(connections[index], socket);
+                    let total_bet = parseInt(data.bet) + parseInt(users.bet);
+
+                    console.log(data.bet);
+                    console.log(users.bet);
+
+                    new GameManager(users.address, data.address,connections[index], socket, total_bet);
                     
                     // Remove the user from QUEUE
                     removeFromQueue(users.address);
