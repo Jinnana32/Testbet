@@ -112,6 +112,10 @@ $(document).ready(function() {
           // Flip cancel button
           $(".flippers").flip(true);
 
+          let yourScore = 0;
+          let enemyScore = 0;
+          let questionTracker = 1;
+
           // Init socket IO
           socket = io.connect('http://localhost:3000');
     
@@ -126,14 +130,108 @@ $(document).ready(function() {
             
             // Click listener if player is ready
             $(".readyBtn").click(function(){
+              $(".readyBtn").text("Waiting for other players");
               socket.emit("ready");
             });
     
           });
           
-          socket.on("loadQuestion", function(question){
-              console.log(question);
+          socket.on("loadQuestion", function(results){
+            $("#start_area").css("display", "none");
+            $("#gaming_area").css("display", "block");
+            // Player views of the question
+            $(".player_question").html("Question " + questionTracker);
+            loadQuestionTemplate(results);
+            questionTracker++;
+
+            $(".socketSubmit").click(function(){
+                let userAnswer = $('.bet_options').val();
+                socket.emit("submit-answer", userAnswer);
+            });
           });
+
+          socket.on("answer-update", function(status){
+            switch(status){
+              case "waiting":
+                $("#sub_status").html("Waiting opponent");
+              break;
+              case "answering":
+                $("#sub_status").html("Opponent submmited");
+              break;
+              case "Submitted":
+                $("#sub_status").html("Both Party submitted");
+              break;
+            }
+          });
+
+          socket.on("next-question", function(results){
+            $(".socketSubmit").css("display", "none");
+            let userAns = results.userAnswer;
+            let opAns = results.opponentAnswer;
+            let userStats = results.userStatus;
+            let opStats = results.opponentStatus;
+
+            if(userStats == "wrong"){
+              $(".userAnswer").removeClass("grey").addClass("red");
+            }else{
+              $(".userAnswer").removeClass("grey").addClass("green");
+            }
+
+            if(opStats == "wrong"){
+              $(".opponentAnswer").removeClass("grey").addClass("red");
+            }else{
+              $(".opponentAnswer").removeClass("grey").addClass("green");
+            }
+
+            $(".userAnswer").html(userAns);
+            $(".opponentAnswer").html(opAns);
+
+          });
+
+          socket.on("update-scores", function(scores){
+            alert("score update");
+              $(".your_score").html(scores.userScore + "/10");
+              $(".opp_score").html(scores.opScore + "/10");
+          });
+
+  }
+
+  function loadQuestionTemplate(results){
+    //console.log(results);
+    let question = results.question;
+    let correct_answer = results.correct_answer;
+    let wrong_answer = results.incorrect_answers;
+
+    let choices = [correct_answer, wrong_answer[0],wrong_answer[1],wrong_answer[2]];
+
+    var parent = $(".shuffle");
+    var lis = parent.children();
+
+    // Question
+    $(".quiz_question").html("'" + question + "'");
+
+    // Choices
+    $(".item1").html(correct_answer);
+    $(".item2").html(wrong_answer[0]);
+    $(".item3").html(wrong_answer[1]);
+    $(".item4").html(wrong_answer[2]);
+
+    // Shuffle Choices
+    while (lis.length) {
+      parent.append(lis.splice(Math.floor(Math.random() * lis.length), 1)[0]);
+    }
+
+    $(".bet_options").html("");
+    console.log(choices);
+
+    // Player select answer
+    for(let x = 0; x < choices.length; x++){
+      console.log(choices[x]);
+      //$(".bet_options").append("hello");
+      $(".bet_options").append('<option value="' + choices[x] + '">'+ choices[x] +'</option>');
+    }
+
+
   }
 
 

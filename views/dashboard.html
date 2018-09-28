@@ -67,12 +67,12 @@
                     <div class="card" style = "padding:0px 5px;">
                         <div class="row">
                             <div class="col 4 offset-s2">
-                                    <h5>"What is the center of the earth"</h5>
-                                    <ol type = "A" class="collection">
-                                        <li class="collection-item">Core</li>
-                                        <li class="collection-item">Cores</li>
-                                        <li class="collection-item">Corez</li>
-                                        <li class="collection-item">Coreb</li>
+                                    <h5 class = "quiz_question">"What is the center of the earth"</h5>
+                                    <ol type = "A" class="collection shuffle">
+                                        <li class="collection-item item1">Core</li>
+                                        <li class="collection-item item2">Cores</li>
+                                        <li class="collection-item item3">Corez</li>
+                                        <li class="collection-item item4">Coreb</li>
                                     </ol>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                                 <table class="striped">
                                     <tr>
                                         <td>Turn Status:</td>
-                                        <td>No submissions yet.</td>
+                                        <td id = "sub_status">No submissions yet.</td>
                                     </tr>
                                 </table>
                         </div>
@@ -93,11 +93,11 @@
                                 <table class="striped">
                                     <tr>
                                             <td>Your score:</td>
-                                            <td>No submissions yet.</td>
+                                            <td id = "your_score">0/10</td>
                                         </tr>
                                         <tr>
                                                 <td>Enemy Score:</td>
-                                                <td>No submissions yet.</td>
+                                                <td id = "opp_score">0/10</td>
                                             </tr>
                                 </table>
                         </div>
@@ -108,17 +108,13 @@
                             <div class="row" style = "margin:0">
                               
                                     <div class="input-field col s12">
-                                            <h6>Question: 3</h6>
-                                            <select class="bet_options">
-                                              <option value="50">A. Core</option>
-                                              <option value="100">B. Egypt</option>
-                                              <option value="150">C. Areanan</option>
-                                              <option value="150">D. asdaw</option>
+                                            <h6 class="player_question">Question: 3</h6>
+                                            <select class="browser-default bet_options">
                                             </select>
-                                            <label>Choose answer</label>
+                                    
                                           </div>
                                           <div class="input-field col s8">
-                                                <button type ="button" class="btn waves-effect waves-orange green btn-small">Submit Answer</button>
+                                                <button type ="button" class="btn waves-effect waves-orange green btn-small socketSubmit">Submit Answer</button>
                                             </div>
                             </div>
                     </div>
@@ -129,8 +125,9 @@
                         <div class="row center-align">
                             <div class="col s6">Your Answer</div>
                             <div class="col s6">Opponent Answer</div>
-                            <div class="col s6 grey white-text" style="padding:10px 0px;">Waiting...</div>
-                            <div class="col s6 red  white-text" style="padding:10px 0px;">Core</div>
+                            <div class="col s6 grey white-text userAnswer" style="padding:10px 0px;">Waiting...</div>
+                            <div class="col s6 grey white-text opponentAnswer" style="padding:10px 0px;">Waiting...</div>
+                            <!-- div class="col s6 red  white-text" style="padding:10px 0px;">Core</div -->
                         </div>
                         <div class="row">
                             <div class="input-field col s12 center-align">
