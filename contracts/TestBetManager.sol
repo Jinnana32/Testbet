@@ -4,8 +4,9 @@ contract TestBetManager {
     
     address owner;
     
+    mapping(address => bool) public playerExist;
     mapping(address => Player) public playerInfo;
-    mapping(uint => uint) pending_bets;
+    mapping(string => uint) pending_bets;
     
     modifier validateBalance(uint amount) {
         require(address(this).balance > 0);
@@ -15,7 +16,7 @@ contract TestBetManager {
 
     // Save player address for checking
     address[] public players;
-    uint[] public bets;
+    string[] public bets;
     
     struct Player {
         string name;
@@ -25,12 +26,12 @@ contract TestBetManager {
     
     struct Match {
         uint256 bet;
-        uint256 score;
+        uint256 winnerScore;
+        uint256 loserScore;
         uint256 totalQuestion;
         address winner;
         address loser;
         string date_created;
-        Quiz[] quizes;
     }
     
     struct Quiz {
@@ -53,29 +54,39 @@ contract TestBetManager {
     
     // adds new player
     function addNewPlayer(string _name, address _playerAddress) public returns(bool){
-        
-        for(uint256 i = 0; i < getPlayerLength(); i++){
-            if(players[i] == _playerAddress){
-                return false;
-            }
-        }
+
+        if(playerExist[_playerAddress]) return false;
         
         playerInfo[_playerAddress].name = _name;
         playerInfo[_playerAddress].rank = "Newbie";
         players.push(_playerAddress);
         
+        playerExist[_playerAddress] = true;
+
         return true;
 
     }
-    
-    function playerExist(address _playerAddress) public view returns(bool){
-        for(uint256 i = 0; i < getPlayerLength(); i++){
-            if(players[i] == _playerAddress){
-                return true;
-            }
-        }
+     
+    function addMatchHistory(
+        uint256 bet,
+        uint256 winnerScore,
+        uint256 loserScore,
+        uint256 totalQuestion,
+        address winner,
+        address loser,
+        string date_created
+    ) public {
+        playerInfo[winner].matches.push(
+            Match(bet,winnerScore,loserScore,totalQuestion,winner,loser,date_created)    
+        );
         
-        return false;
+        playerInfo[loser].matches.push(
+            Match(bet,winnerScore,loserScore,totalQuestion,winner,loser,date_created)    
+        );
+    }
+    
+    function playerExist(address _playerAddress) public view returns(bool doesPlayerExist){
+        doesPlayerExist = playerExist[_playerAddress];
     }
     
     function getPlayerInfo(address _playerAddress) public view 
@@ -90,7 +101,8 @@ contract TestBetManager {
     
     function getPlayerMatchHistory(address _playerAddress, uint index) public view 
     returns(uint256 bet,
-            uint256 score,
+            uint256 winnerScore,
+            uint256 loserScore,
             uint256 totalQuestion,
             address winner,
             address loser,
@@ -99,29 +111,14 @@ contract TestBetManager {
         
         Match cm = playerInfo[_playerAddress].matches[index];
         bet = cm.bet;
-        score = cm.score;
+        winnerScore = cm.winnerScore;
+        loserScore = cm.loserScore;
         totalQuestion = cm.totalQuestion;
         winner = cm.winner;
         loser = cm.loser;
         date_created = cm.date_created;
     }
     
-    function getMatchQuestions(address _playerAddress, uint matchIndex, uint quizIndex) public view 
-    returns(string question,
-            string correctAnswer,
-            string choice1,
-            string choice2,
-            string choice3)
-    {
-        Match cm = playerInfo[_playerAddress].matches[matchIndex];
-        Quiz qz = cm.quizes[quizIndex];
-        
-        question = qz.question;
-        correctAnswer = qz.correctAnswer;
-        choice1 = qz.choice1;
-        choice2 = qz.choice2;
-        choice3 = qz.choice3;
-    }
     
     /*
     ===========================
@@ -133,13 +130,13 @@ contract TestBetManager {
     function placeBet() public payable{}
     
     // Start match by saving the total bet
-    function MakeMatch(uint _bet, uint _uuid) public returns(uint id){
-        pending_bets[_uuid] = _bet;
+    function MakeMatch(uint _bet, string _uuid) public{
+        uint amount = convertFinneyToWei(_bet);
+        pending_bets[_uuid] = amount;
         bets.push(_uuid);
-       return _uuid;
     }
     
-    function allocateBetToWinner(address _winner, uint _uuid) public validateBalance(amount){
+    function allocateBetToWinner(address _winner, string _uuid) public validateBalance(amount){
         uint amount = pending_bets[_uuid];
          if(!_winner.send(amount)){
            throw;
@@ -154,6 +151,14 @@ contract TestBetManager {
     
     function getPlayerLength() public view returns(uint256 length){
         length = players.length;
+    }
+    
+    function getBet(string _uuid) public view returns(uint256 bet){
+        bet = pending_bets[_uuid];
+    }
+    
+    function convertFinneyToWei(uint finn) public view returns(uint256 wwei){
+        wwei = finn * 1000000000000000;
     }
     
 }

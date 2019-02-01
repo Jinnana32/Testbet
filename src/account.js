@@ -30,6 +30,8 @@ $(document).ready(function(){
                 $.get('contractAddress.txt', function(address){
                     contractAddress = address;
                     contract = contractAbi.at(contractAddress);
+
+                    checkIfPlayerExist();
                 }, "text");
         }, "text");
     }
@@ -48,6 +50,18 @@ $(document).ready(function(){
       }
       document.location.href = "/dashboard";
     });
+  }
+
+  function checkIfPlayerExist(){
+    contract.playerExist(userAddress, {gas: 30000}, function(err, res){
+      if(err !== null){
+        alert("Something went wrong refresh the page.");
+      }else{
+        if(res) { 
+          document.location.href = "/dashboard";
+        }
+      }
+    })
   }
 
   /*

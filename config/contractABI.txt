@@ -1,5 +1,117 @@
 [
 	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "bet",
+				"type": "uint256"
+			},
+			{
+				"name": "winnerScore",
+				"type": "uint256"
+			},
+			{
+				"name": "loserScore",
+				"type": "uint256"
+			},
+			{
+				"name": "totalQuestion",
+				"type": "uint256"
+			},
+			{
+				"name": "winner",
+				"type": "address"
+			},
+			{
+				"name": "loser",
+				"type": "address"
+			},
+			{
+				"name": "date_created",
+				"type": "string"
+			}
+		],
+		"name": "addMatchHistory",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_playerAddress",
+				"type": "address"
+			}
+		],
+		"name": "addNewPlayer",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_winner",
+				"type": "address"
+			},
+			{
+				"name": "_uuid",
+				"type": "string"
+			}
+		],
+		"name": "allocateBetToWinner",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_bet",
+				"type": "uint256"
+			},
+			{
+				"name": "_uuid",
+				"type": "string"
+			}
+		],
+		"name": "MakeMatch",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "placeBet",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
 		"constant": true,
 		"inputs": [
 			{
@@ -11,6 +123,25 @@
 		"outputs": [
 			{
 				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "finn",
+				"type": "uint256"
+			}
+		],
+		"name": "convertFinneyToWei",
+		"outputs": [
+			{
+				"name": "wwei",
 				"type": "uint256"
 			}
 		],
@@ -22,19 +153,15 @@
 		"constant": true,
 		"inputs": [
 			{
-				"name": "",
-				"type": "address"
+				"name": "_uuid",
+				"type": "string"
 			}
 		],
-		"name": "playerInfo",
+		"name": "getBet",
 		"outputs": [
 			{
-				"name": "name",
-				"type": "string"
-			},
-			{
-				"name": "rank",
-				"type": "string"
+				"name": "bet",
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -83,90 +210,6 @@
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"name": "_playerAddress",
-				"type": "address"
-			}
-		],
-		"name": "addNewPlayer",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_playerAddress",
-				"type": "address"
-			},
-			{
-				"name": "matchIndex",
-				"type": "uint256"
-			},
-			{
-				"name": "quizIndex",
-				"type": "uint256"
-			}
-		],
-		"name": "getMatchQuestions",
-		"outputs": [
-			{
-				"name": "question",
-				"type": "string"
-			},
-			{
-				"name": "correctAnswer",
-				"type": "string"
-			},
-			{
-				"name": "choice1",
-				"type": "string"
-			},
-			{
-				"name": "choice2",
-				"type": "string"
-			},
-			{
-				"name": "choice3",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_winner",
-				"type": "address"
-			},
-			{
-				"name": "_uuid",
-				"type": "uint256"
-			}
-		],
-		"name": "allocateBetToWinner",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"constant": true,
 		"inputs": [
 			{
@@ -185,7 +228,11 @@
 				"type": "uint256"
 			},
 			{
-				"name": "score",
+				"name": "winnerScore",
+				"type": "uint256"
+			},
+			{
+				"name": "loserScore",
 				"type": "uint256"
 			},
 			{
@@ -210,26 +257,45 @@
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"constant": true,
 		"inputs": [
 			{
-				"name": "_bet",
-				"type": "uint256"
-			},
-			{
-				"name": "_uuid",
-				"type": "uint256"
+				"name": "_playerAddress",
+				"type": "address"
 			}
 		],
-		"name": "MakeMatch",
+		"name": "playerExist",
 		"outputs": [
 			{
-				"name": "id",
-				"type": "uint256"
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"payable": false,
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "playerInfo",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "rank",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -250,39 +316,5 @@
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "placeBet",
-		"outputs": [],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_playerAddress",
-				"type": "address"
-			}
-		],
-		"name": "playerExist",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
 	}
 ]

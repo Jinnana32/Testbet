@@ -137,18 +137,34 @@
                    </div>
                 </div>
 
-                <style>
+                    <style>
                         #flying-pot{
                             position: absolute;
                             top:100;
                             left:0;
                         }
+
+                        #flying-debug{
+                            position: absolute;
+                            top:700;
+                            right:0;
+                        }
                     </style>
+
                     <div id = "flying-pot">
                         <div class="card">
                             <h6 class="purple white-text" style="padding:5px 10px 5px 50px;"><strong>Total Bet</strong></h6>
                             <p style="padding:5px 10px 0px 50px;"><strong>50 Finney</strong></p>
                             <p style="padding:0px 10px 20px 50px;"><strong>(0.05 ETH)</strong></p>
+                        </div>
+                    </div>
+
+                    <div id = "flying-debug">
+                        <div class="card">
+                            <h6 class="black white-text" style="padding:5px 20px 5px 10px;"><strong>(Debugging only)</strong></h6>
+                            <div style="padding:0px 20px 20px 10px;"><button type ="button" class="btn waves-effect waves-orange orange info btn-small btnFinishMatch">Finish Match</button>
+                            </div>    
+                        
                         </div>
                     </div>
         
@@ -268,9 +284,9 @@
                                 <div class="row" style = "margin:0">
                                         <div class="input-field col s6 offset-s3">
                                                 <select class="bet_options">
-                                                  <option value="50000000000000000">0.05 ETH</option>
-                                                  <option value="100000000000000000">0.10 ETH</option>
-                                                  <option value="150000000000000000">0.15 ETH</option>
+                                                  <option value="50">0.05 ETH</option>
+                                                  <option value="100">0.10 ETH</option>
+                                                  <option value="150">0.15 ETH</option>
                                                 </select>
                                                 <label>BET OPTIONS</label>
                                               </div>

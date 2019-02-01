@@ -7,9 +7,9 @@ $(document).ready(function() {
       contractAddress,
       contract;
 
-      
   initWeb3();
   initContract();
+  //reloadMetaMask();
 
   /*
   ==============================================================================
@@ -26,8 +26,6 @@ $(document).ready(function() {
                 contract = contractAbi.at(contractAddress);
 
                 checkIfPlayerExist();
-
-                loadProfile();
             }, "text");
     }, "text");
   }
@@ -46,19 +44,36 @@ $(document).ready(function() {
   */
 
   function checkIfPlayerExist(){
-    contract.playerExist(userAddress, function(err, res){
+    contract.playerExist(userAddress, {gas: 30000}, function(err, res){
       if(err !== null){
         alert("Something went wrong refresh the page.");
       }else{
-        if(!res) document.location.href = "/account";
+        if(!res) { 
+          document.location.href = "/account";
+        }else{
+          loadProfile();
+        }
       }
     })
   }
 
+  function reloadMetaMask(){
+    setTimeout(function(){
+      if (typeof web3 !== "undefined") {
+        web3 = new Web3(web3.currentProvider);
+        if(web3.eth.defaultAccount !== userAddress){
+          document.location.href = "/";
+        }
+      }
+
+      console.log("Reload");
+    }, 500);
+  }
+
   function loadProfile(){
-    contract.getPlayerInfo(userAddress, function(err,res){
+    contract.getPlayerInfo(userAddress, {gas: 30000}, function(err,res){
       if(err !== null){
-        alert("Something went wrong refresh the page.");
+        alert("Something went wrong on the Metamask. JSON-RPC error");
       }else{
         $(".acc_name").text(res[0]);
         $("#acc_address").text(userAddress);
@@ -67,8 +82,7 @@ $(document).ready(function() {
       }
     });
   }
-
-
+  
    /*
   ==============================================================================
                             UI MANIPULATION LOGICS
@@ -86,12 +100,13 @@ $(document).ready(function() {
   findMatchBtn.click(() => {
 
     let amountToBet = $(".bet_options option:selected").val()
+    let totalBetTransfer = (parseInt(amountToBet) * 1000000000000000);
+    //startMatchMaking(amountToBet);
 
-    startMatchMaking(amountToBet);
-
-    // contract.placeBet({gas: 50000, value: amountToBet},function(err,res){
-    //   if(err !== null) return false;
-    // });
+    contract.placeBet({gas: 500000, value: totalBetTransfer},function(err,res){
+        if(err !== null) console.log(err);
+        if(res) startMatchMaking(amountToBet)
+    });
 
   });
 
@@ -131,6 +146,7 @@ $(document).ready(function() {
             // Click listener if player is ready
             $(".readyBtn").click(function(){
               $(".readyBtn").text("Waiting for other players");
+              $(".readyBtn").removeClass("blue").addClass("green");
               socket.emit("ready");
             });
     
@@ -149,6 +165,7 @@ $(document).ready(function() {
                 let userAnswer = $('.bet_options').val();
                 socket.emit("submit-answer", userAnswer);
             });
+
           });
 
           socket.on("answer-update", function(status){
@@ -201,7 +218,9 @@ $(document).ready(function() {
             $("#opp_score").html(scores.opScore + "/10");
           });
 
-          
+          $(".btnFinishMatch").click(function(){
+            socket.emit("finish");
+          });
 
   }
 
@@ -263,7 +282,5 @@ $(document).ready(function() {
     }
 
   }
-
-
 
 });

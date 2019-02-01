@@ -91,10 +91,6 @@ io.sockets.on('connection', (socket) => {
             queue.forEach((users, index) => {
                 if(data.bet == users.bet){
                     let total_bet = parseInt(data.bet) + parseInt(users.bet);
-
-                    console.log(data.bet);
-                    console.log(users.bet);
-
                     new GameManager(users.address, data.address,connections[index], socket, total_bet);
                     
                     // Remove the user from QUEUE
@@ -132,4 +128,3 @@ mdclient.connect('mongodb://powerofpanda:Jinnana3232##@ds015924.mlab.com:15924/t
         console.log("Server is running at http://localhost:3000");
     });   
 });
-
